@@ -44,6 +44,8 @@ if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
         sed -i -e '/^if_vmx_load=.*/d' /boot/loader.conf
 
 	sysrc vmware_guestd_enable=YES
+	sysrc fusefs_enable=YES
+	echo 'fuse_load="YES"' >> /boot/loader.conf
 elif [ "$PACKER_BUILDER_TYPE" = 'virtualbox-iso' ]; then
 	pkg-static install -y virtualbox-ose-additions-nox11
 	sysrc ifconfig_em1="inet 10.6.66.42 netmask 255.255.255.0"
@@ -58,6 +60,11 @@ echo
 echo 'Setting up sudo...'
 pkg-static install -y sudo
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/vagrant
+
+echo
+echo 'Crating /vagrant directory ...'
+mkdir /vagrant
+chown vagrant:vagrant /vagrant
 
 echo
 echo 'Setting up the vagrant ssh keys...'

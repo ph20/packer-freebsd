@@ -22,7 +22,7 @@
     hostname: "freebsd-vagrant",
     iso_daterev: "20200723-r363433",
     buildtag: "STABLE",
-    iso_checksum: "7bff703840290cbcbf3d9a8052fad6533132e1f8ae65c49b306b4fb22ab8320fca6ec994a082e0758d0b3b8a9b73927237558be2ced3f4373a9a185b0d7bb590",
+    iso_checksum: "e40d98bdf01eb0842a26d1f401c984b1fffb51c694d1ef9017abe674eba07f62f37affdb19f511f8a18aabf0efb336b6e064149b650b7288bb761371b8df63c5",
     iso_version: "12.1",
     iso_checksum_type: "sha512",
     vagrant_username: "vagrant",
@@ -36,7 +36,6 @@
     {
       type: "vmware-iso",
       communicator: "ssh",
-      ssh_disable_agent: "true",
       ssh_pty: "true",
 
       // NOTE: Synchronize the boot_command list with `virtualbox-iso`'s
@@ -129,7 +128,7 @@
         "wheel",                             // Auxiliary Group
         "<enter><wait>",
         "<enter><wait>",                     // Login Class
-        "sh",                                // Login shell
+        "csh",                                // Login shell
         "<enter><wait>",
         "/home/{{user `vagrant_username`}}", // Home Directory
         "<enter><wait>",
@@ -176,13 +175,12 @@
       disk_size: "{{user `disk_size_mb`}}",
       guest_os_type: "freebsd-64",
       headless: "{{user `headless`}}",
-      iso_checksum: "{{user `iso_checksum`}}",
-      iso_checksum_type: "{{user `iso_checksum_type`}}",
+      iso_checksum: "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
       iso_url: "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}-disc1.iso",
       shutdown_command: "poweroff; poweroff",
       ssh_password: "{{user `vagrant_password`}}",
       ssh_username: "root",
-      ssh_wait_timeout: "{{user `ssh_wait_timeout`}}",
+      ssh_timeout: "{{user `ssh_wait_timeout`}}",
       vm_name: "FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}",
       vmx_data: {
         "ethernet0.connectionType": "nat",
@@ -344,7 +342,7 @@
       guest_os_type: "FreeBSD_64",
       hard_drive_interface: "sata",
       headless: "{{user `headless`}}",
-      iso_checksum: "{{user `iso_checksum`}}",
+      iso_checksum: "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
       iso_checksum_type: "{{user `iso_checksum_type`}}",
       iso_interface: "sata",
       iso_url: "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}-disc1.iso",

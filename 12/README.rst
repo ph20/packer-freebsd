@@ -1,6 +1,31 @@
 FreeBSD 12.X Packer Images
 ==========================
 
+12.1
+----
+
+``FreeBSD-12.1-STABLE-amd64-20200723-r363433``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Supported builders:
+
+- ``vmware_fusion``::
+
+    $ cd 12/ # This directory
+    $ make 12.1-20200909-zfs PROVIDER=vmware-iso # EXTRA_OPTS="-var headless=false -debug"
+    $ vagrant box add --name FreeBSD-12.1-STABLE-zfs-20200723-r363433-vmware --provider=vmware_desktop FreeBSD-12.1-STABLE-zfs-20200723-r363433-vmware.box
+    $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
+    $ vagrant init -m FreeBSD-12.1-STABLE-zfs-20200723-r363433-vmware
+    $ vagrant init --output Vagrantfile.example FreeBSD-12.1-STABLE-zfs-20200723-r363433-vmware
+    $ vagrant up --provider=vmware_desktop --destroy-on-error
+    $ vagrant ssh
+    $ vagrant suspend
+    $ vagrant destroy
+    $ vagrant box remove FreeBSD-12.1-STABLE-zfs-20200723-r363433-vmware
+
+
+
+
 12.0
 ----
 

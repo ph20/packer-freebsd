@@ -54,6 +54,7 @@
         // Distribution Select
         "k<spacebar><wait>",            // Disable kernel-dbg
         "<down><down><spacebar><wait>", // Disable lib32
+        "<down><spacebar><wait>", // Enable ports tree
         "<enter><wait>",
 
         // Partitioning
@@ -170,7 +171,6 @@
         "R", // Select Reboot
         "<wait10><wait10><wait10><wait10><wait10>", // Wait for disk to flush
       ],
-      // http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/12.1/FreeBSD-12.1-STABLE-amd64-20200723-r363433-disc1.iso
       boot_wait: "{{user `boot_wait`}}",
       disk_size: "{{user `disk_size_mb`}}",
       guest_os_type: "freebsd-64",
@@ -219,6 +219,7 @@
         // Distribution Select
         "k<spacebar><wait>",            // Disable kernel-dbg
         "<down><down><spacebar><wait>", // Disable lib32
+        "<down><spacebar><wait>", // Enable ports tree
         "<enter><wait>",
 
         // Partitioning

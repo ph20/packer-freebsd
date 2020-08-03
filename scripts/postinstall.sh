@@ -65,6 +65,9 @@ echo
 echo 'Crating /vagrant directory ...'
 mkdir /vagrant
 chown vagrant:vagrant /vagrant
+echo 'Crating /workspace directory ...'
+mkdir /workspace
+chown vagrant:vagrant /workspace
 
 echo
 echo 'Setting up the vagrant ssh keys...'

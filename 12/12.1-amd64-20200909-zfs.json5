@@ -227,7 +227,7 @@
         "<enter><wait>",
 
         // ZFS Configuration
-        "<enter><wait>", // Select Install
+        "<left><wait><enter><wait>", // Select Install
 
         // ZFS Configuration
         "<enter><wait>", // Select `stripe`
@@ -294,7 +294,7 @@
         "wheel",                             // Auxiliary Group
         "<enter><wait>",
         "<enter><wait>",                     // Login Class
-        "sh",                                // Login shell
+        "csh",                                // Login shell
         "<enter><wait>",
         "/home/{{user `vagrant_username`}}", // Home Directory
         "<enter><wait>",
@@ -344,7 +344,6 @@
       hard_drive_interface: "sata",
       headless: "{{user `headless`}}",
       iso_checksum: "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
-      iso_checksum_type: "{{user `iso_checksum_type`}}",
       iso_interface: "sata",
       iso_url: "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}-disc1.iso",
       shutdown_command: "poweroff; poweroff",

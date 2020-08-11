@@ -1,6 +1,28 @@
 FreeBSD 10.X Packer Images
 ==========================
 
+10.4
+----
+
+``FreeBSD-10.4-STABLE-amd64-20170929-r324101``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Supported builders:
+
+- ``vmware_fusion``::
+
+    $ cd 10/ # This directory
+    $ make 10.4-20170929-ufs PROVIDER=vmware-iso EXTRA_OPTS="-var headless=false -debug"
+    $ vagrant box add --name FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware --provider=vmware_desktop FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware.box
+    $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
+    $ vagrant init -m FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware
+    $ vagrant init --output Vagrantfile.example FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware
+    $ vagrant up --provider=vmware_fusion --destroy-on-error
+    $ vagrant ssh
+    $ vagrant suspend
+    $ vagrant destroy
+    $ vagrant box remove FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware
+
 10.3
 ----
 

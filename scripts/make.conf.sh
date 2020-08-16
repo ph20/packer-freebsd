@@ -18,7 +18,6 @@ WITHOUT_GAMES= YES
 WITHOUT_USB= YES
 WITHOUT_WIRELESS= YES
 WITHOUT_WPA_SUPPLICANT_EAPOL= YES
-WITHOUT_NTP= YES # time sync is handled by VirtualBox
 EOF
 
 echo ' * /etc/ports.conf'

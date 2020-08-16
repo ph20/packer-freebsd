@@ -13,15 +13,15 @@ Supported builders:
 
     $ cd 10/ # This directory
     $ make 10.4-20170929-ufs PROVIDER=vmware-iso EXTRA_OPTS="-var headless=false -debug"
-    $ vagrant box add --name FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware --provider=vmware_desktop FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware.box
+    $ vagrant box add --name FreeBSD-10.4-RELEASE-ufs-20170929-r324094-vmware --provider=vmware_desktop FreeBSD-10.4-RELEASE-ufs-20170929-r324094-vmware.box
     $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
-    $ vagrant init -m FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware
-    $ vagrant init --output Vagrantfile.example FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware
+    $ vagrant init -m FreeBSD-10.4-RELEASE-ufs-20170929-r324094-vmware
+    $ vagrant init --output Vagrantfile.example FreeBSD-10.4-RELEASE-ufs-20170929-r324094-vmware
     $ vagrant up --provider=vmware_fusion --destroy-on-error
     $ vagrant ssh
     $ vagrant suspend
     $ vagrant destroy
-    $ vagrant box remove FreeBSD-10.4-RELEASE-ufs-20170929-r324101M-vmware
+    $ vagrant box remove FreeBSD-10.4-RELEASE-ufs-20170929-r324094-vmware
 
 10.3
 ----

@@ -12,23 +12,22 @@
     // Set headless to false to debug
     headless: "true",
     hostname: "freebsd-vagrant",
-    iso_daterev: "20170929-r324101M",
+    iso_daterev: "20170929-r324094",
     buildtag: "RELEASE",
-    iso_checksum: "b543cb634282245cc18b22adf5edaa6fb4c98c57cdf7b2b350d2fb29f36eb693c60730a8489bc01c40a3e6a34b3d8f2c0ac8c226b761c3fcc8afea109a4870f0",
+    iso_checksum: "8fee2c20dd63ec42d31b4656473d9cdd07fddff143461ef1ab0f02ca12eace9701d8adae33f35ccc9a1eda658f5664e95c19f0518b733749f58a96eb70bfcc09",
     iso_version: "10.4",
     iso_checksum_type: "sha512",
     vagrant_username: "vagrant",
     vagrant_password: "vagrant",
     virtualbox_format: "ova",
     vmware_hardware_acceleration: "TRUE",
-    vmware_hardware_version: "12",
+    vmware_hardware_version: "14",
     vmware_serial_port_enabled: "FALSE",
   },
   builders: [
     {
       type: "vmware-iso",
       communicator: "ssh",
-      ssh_disable_agent: "true",
       ssh_pty: "true",
 
       // NOTE: Synchronize the boot_command list with `virtualbox-iso`'s
@@ -47,33 +46,36 @@
         // Distribution Select
         "s<wait>",        // Enable src
         "<spacebar><wait>",
-        "l<wait>",    // Disable lib32
-        "<spacebar><wait>",
+        //"l<wait>",    // Disable lib32
+        //"<spacebar><wait>",
         "g<wait>",        // Disable games
         "<spacebar><wait>",
         "<enter><wait>",
 
         // Partitioning
-        "<down><down><down>", // Highlight "Auto (ZFS)"
-        "<enter><wait>",
+        //"<down><down><down>", // Highlight "Auto (ZFS)"
+        "1<wait><enter>",
 
-        // ZFS Configuration
+        // UFS Configuration
         "<enter><wait>", // Select Install
 
-        // ZFS Configuration
-        "<enter><wait>", // Select `stripe`
+        // Use Entire disk
+        "e<wait>", // Select `Entire disk`
 
-        // ZFS Configuration
-        "<spacebar><enter>", // Toggle `ada0/da0`
+        // UFS Configuration (Partition Schema)
+        "g<wait><enter>", // GPT
 
-        // ZFS Configuration
-        "<left>", // Highlight "Yes" to destroy data device
-        "Y",      // Activate "Yes"
+
+        // UFS Configuration (review disk setup)
+        "f<wait><enter>", // Finish
+        "c<wait>", // Commit
+
 
         // Wait for the installation to complete.  Increase the number of
         // <wait10> operations as necessary to match the capabilities of the IO
         // of the building machine.
         "<wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
 
         // Password
         "vagrant<enter><wait>", // Enter password for the root account
@@ -153,16 +155,14 @@
 
         // Complete
         "R", // Select Reboot
-        "<wait10><wait10><wait10><wait10><wait10>", // Wait for disk to flush
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>", // Wait for disk to flush
 
       ],
       boot_wait: "{{user `boot_wait`}}",
       disk_size: "{{user `disk_size_mb`}}",
       guest_os_type: "freebsd-64",
       headless: "{{user `headless`}}",
-      iso_checksum: "{{user `iso_checksum`}}",
-      iso_checksum_type: "{{user `iso_checksum_type`}}",
-      //iso_url: "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}-disc1.iso",
+      iso_checksum: "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
       iso_url: "http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-disc1.iso",
       shutdown_command: "poweroff; poweroff",
       ssh_password: "{{user `vagrant_password`}}",
@@ -172,14 +172,18 @@
       vmx_data: {
         "ethernet0.connectionType": "nat",
         "ethernet0.linkStatePropagation.enable": "FALSE",
-        "ethernet0.pcislotnumber": "160",
+        //"ethernet0.pcislotnumber": "32",
+        "ethernet0.bsdName": "em0",
         "ethernet0.present": "TRUE",
-        "ethernet0.virtualDev": "vmxnet3",
-        "ethernet0.wakeOnPcktRcv": "FALSE",
-        // "firmware": "efi", // BROKEN(seanc@): https://github.com/brd/packer-freebsd/issues/23
-        "serial0.present": "{{user `vmware_serial_port_enabled`}}",
-        "serial0.fileType": "pipe",
-        "serial0.fileName": "/tmp/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}.serial0",
+        //"ethernet0.virtualDev": "vmxnet3",
+        "ethernet0.wakeOnPcktRcv": "TRUE",
+        "ethernet0.virtualDev": "e1000",
+        "ethernet0.startConnected": "TRUE",
+        "ethernet0.allowguestconnectioncontrol": "TRUE",
+        //"firmware": "efi", // BROKEN(seanc@): https://github.com/brd/packer-freebsd/issues/23
+        //"serial0.present": "{{user `vmware_serial_port_enabled`}}",
+        //"serial0.fileType": "pipe",
+        //"serial0.fileName": "/tmp/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}.serial0",
         "tools.syncTime": "FALSE",
         "mce.enable": "{{user `vmware_hardware_acceleration`}}",
         "vhu.enable": "{{user `vmware_hardware_acceleration`}}",
@@ -306,7 +310,7 @@
         // Shell prompt
         "sed -i -e 's/^#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config<enter><wait>",
         "echo 'autoboot_delay=\"{{user `autoboot_delay`}}\"' >> /boot/loader.conf<enter><wait>",
-        "echo 'if_vmx_load=\"YES\"' >> /boot/loader.conf<enter><wait>",
+        //"echo 'if_vmx_load=\"YES\"' >> /boot/loader.conf<enter><wait>",
         "chsh -s sh root<enter><wait>",
         "exit<enter><wait>",
 
@@ -322,10 +326,9 @@
       guest_os_type: "FreeBSD_64",
       hard_drive_interface: "sata",
       headless: "{{user `headless`}}",
-      iso_checksum: "{{user `iso_checksum`}}",
-      iso_checksum_type: "{{user `iso_checksum_type`}}",
+      iso_checksum: "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
       iso_interface: "sata",
-      iso_url: "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}-disc1.iso",
+      iso_url: "http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-disc1.iso",
       shutdown_command: "poweroff; poweroff",
       ssh_password: "{{user `vagrant_password`}}",
       ssh_username: "root",
@@ -351,9 +354,13 @@
     {
       // See scripts/ for a list of available provisioner scripts.
       scripts: [
-        "../scripts/zfs-setup.sh",
+        "../scripts/ufs-setup.sh",
+        "../scripts/make.conf.sh",
+        "../scripts/custom_repo.sh",
+        "../scripts/custom_repo.sh",
         "../scripts/postinstall.sh",
-        "../scripts/zfsnap.sh",
+        "../scripts/vmware-guest.sh",
+        "../scripts/vagrant-user.sh"
       ],
       type: "shell"
     }

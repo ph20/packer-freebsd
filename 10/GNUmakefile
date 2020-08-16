@@ -8,7 +8,7 @@ default: help
 # Image Targets.  Sort newest images first.
 
 
-10.4-20170929-ufs: 10.4-amd64-20170929-ufs.json5 ## Build UFS root FreeBSD-10.4-RELEASE-amd64-20170929-r324101M
+10.4-20170929-ufs: 10.4-amd64-20170929-ufs.json ## Build UFS root FreeBSD-10.4-RELEASE-amd64-20170929-r324094
 	@exec $(MAKE) _build PROVIDER=$(PROVIDER) EXTRA_OPTS="$(EXTRA_OPTS)" TEMPLATE=$<
 
 10.3-20170607-zfs: 10.3-amd64-20170607-zfs.json ## Build ZFS root FreeBSD-10.3-STABLE-amd64-20170607-r319484

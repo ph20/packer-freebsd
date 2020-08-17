@@ -5,9 +5,13 @@ mkdir -p /usr/local/etc/pkg/repos/
 cat <<'EOF' > /usr/local/etc/pkg/repos/mirrorsxtomnl.conf
 mirrorsxtomnl: {
     url: https://mirrors.xtom.nl/freebsd-pkg/${ABI}/quarterly
-    url: http://flashback.sorbs.net/packages/
 }
 EOF
+#cat <<'EOF' > /usr/local/etc/pkg/repos/flashbacksorbsnet.conf
+#flashbacksorbsnet: {
+#    url: http://flashback.sorbs.net/packages/${ABI}
+#}
+#EOF
 
 echo 'Disable main FreeBsd repo'
 cat <<'EOF' > /usr/local/etc/pkg/repos/FreeBSD.conf

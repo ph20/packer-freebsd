@@ -15,7 +15,6 @@ To use this set of |packer|_ templates, the following prerequisites is required:
 4. Install a recent version of |packer|_::
 
     make install-packer
-    make install-packer
 5. Install a recent version of |cfgt|_::
 
     make install-cfgt

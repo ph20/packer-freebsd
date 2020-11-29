@@ -1,5 +1,4 @@
 packer_cache/
-output-vmware-iso/
 *.box
 .*.sw?
 .vagrant/

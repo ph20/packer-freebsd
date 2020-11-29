@@ -4,6 +4,10 @@ FreeBSD Packer Templates
 This repository contains a collection of tools and scripts to build |FreeBSD|_
 images using |packer|_ for a variety of target providers.
 
+Usage
+------------
+You can find all builds on my vagrantup repo https://app.vagrantup.com/ph20/
+
 Installation
 ------------
 
